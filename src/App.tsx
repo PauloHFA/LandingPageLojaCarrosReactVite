@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { Car, Star, Shield, Phone, MapPin, Clock, Mail, Menu, X, Filter, DollarSign, Gauge, Calendar } from 'lucide-react';
 
+interface CarType {
+  id: number;
+  name: string;
+  brand: string;
+  year: string;
+  price: number;
+  km: number;
+  transmission: string;
+  image: string;
+}
+
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -91,6 +102,16 @@ function App() {
       km: 0,
       transmission: 'Automático',
       image: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&q=80&w=1000'
+    },
+    {
+      id: 6,
+      name: 'Tesla Model S Plaid',
+      brand: 'Tesla',
+      year: '2024',
+      price: 899900,
+      km: 0,
+      transmission: 'Automático',
+      image: 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&q=80&w=1000'
     }
   ];
 
@@ -254,28 +275,24 @@ function App() {
 
           {/* Cars Grid */}
           <div className="grid md:grid-cols-3 gap-8">
-            {filteredCars.map(car => (
-              <div key={car.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img
-                  src={car.image}
-                  alt={car.name}
-                  className="w-full h-48 object-cover"
-                />
+            {filteredCars.map((car) => (
+              <div 
+                key={car.id} 
+                className="bg-white rounded-lg shadow-lg overflow-hidden"
+              >
+                <img src={car.image} alt={car.name} className="w-full h-48 object-cover" />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{car.name}</h3>
-                  <p className="text-gray-600 mb-4">{car.year} | {car.km} km | {car.transmission}</p>
-                  <p className="text-2xl font-bold text-red-600">
-                    {car.price.toLocaleString('pt-BR', {
-                      style: 'currency',
-                      currency: 'BRL'
-                    })}
-                  </p>
-                  <button 
-                    onClick={() => setIsModalOpen(true)}
-                    className="mt-4 w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition duration-300"
-                  >
-                    Agendar Visita
-                  </button>
+                  <div className="flex justify-between text-gray-600 mb-4">
+                    <span>{car.year}</span>
+                    <span>{car.transmission}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-2xl font-bold text-red-600">
+                      R$ {car.price.toLocaleString('pt-BR')}
+                    </span>
+                    <span className="text-gray-600">{car.km.toLocaleString('pt-BR')} km</span>
+                  </div>
                 </div>
               </div>
             ))}
